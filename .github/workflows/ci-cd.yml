@@ -1,20 +1,35 @@
-name: Test
+name: CI/CD Pipeline
 
-on: [push]
+on:
+  push:
+    branches: [ "main" ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 18
 
-      - name: Clean install
-        run: npm ci
+      - name: Install dependencies
+        run: npm install
 
       - name: Run tests
-        run: node ./node_modules/jest/bin/jest.js
+        run: npm test
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t student-task-manager .
