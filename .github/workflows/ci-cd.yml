@@ -13,6 +13,8 @@ jobs:
         with:
           node-version: 22
 
-      - run: npm install
+      - name: Clean install
+        run: npm ci
 
-      - run: npx jest
+      - name: Run tests
+        run: node ./node_modules/jest/bin/jest.js
