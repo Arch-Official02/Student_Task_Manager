@@ -44,10 +44,7 @@ resource "aws_instance" "app_server" {
 
               docker pull ${var.docker_image}
 
-              docker run -d \
-                --restart always \
-                -p 5000:5000 \
-                ${var.docker_image}
+              docker run -d -p 5000:5000 ${var.docker_image}
 
               EOF
 

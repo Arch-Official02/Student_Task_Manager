@@ -14,7 +14,7 @@ systemctl enable docker
 usermod -aG docker ec2-user
 
 # pull your app image (CHANGE THIS)
-docker pull /student-task-manager:latest
+docker pull /archofficial97/stm:v2
 
 # run container
-docker run -d -p 5000:5000 YOUR_DOCKER_USERNAME/student-task-manager:latest
+docker run -d -p 5000:5000 archofficial97/stm:v2
