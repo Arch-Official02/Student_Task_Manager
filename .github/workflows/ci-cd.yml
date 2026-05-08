@@ -39,8 +39,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/student-task-manager:latest .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/student-task-manager:v1.0.0 .
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/student-task-manager:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/student-task-manager:v1.0.0
