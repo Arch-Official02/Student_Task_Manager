@@ -7,5 +7,9 @@ variable "instance_type" {
 }
 
 variable "key_name" {
-  description = "AWS EC2 key pair"
+  description = "AWS EC2 Key Pair Name"
+}
+
+variable "docker_image" {
+  description = "DockerHub image"
 }
