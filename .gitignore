@@ -14,11 +14,7 @@ npm-debug.log*
 *.tfstate
 *.tfstate.*
 .terraform/
-crash.log
-override.tf
-override.tf.json
-*_override.tf
-*_override.tf.json
+
 
 # Terraform variable files
 terraform.tfvars
@@ -26,16 +22,6 @@ terraform.tfvars
 
 # SSH keys
 *.pem
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# VS Code
-.vscode/
-
-# Coverage
-coverage/
 
 # CloudWatch agent temp files
 amazon-cloudwatch-agent.log
