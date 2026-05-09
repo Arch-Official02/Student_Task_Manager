@@ -1,5 +1,37 @@
+# --------------------
+# IAM ROLE FOR CLOUDWATCH
+# --------------------
+resource "aws_iam_role" "ec2_role" {
+  name = "ec2-cloudwatch-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Effect = "Allow",
+      Principal = {
+        Service = "ec2.amazonaws.com"
+      },
+      Action = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "cw_attach" {
+  role       = aws_iam_role.ec2_role.name
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+}
+
+resource "aws_iam_instance_profile" "ec2_profile" {
+  name = "ec2-cloudwatch-profile"
+  role = aws_iam_role.ec2_role.name
+}
+
+# --------------------
+# SECURITY GROUP
+# --------------------
 resource "aws_security_group" "app_sg" {
-  name = "student-task-manager-sg"
+  name        = "app-sg"
+  description = "Allow HTTP and SSH"
 
   ingress {
     from_port   = 5000
@@ -23,30 +55,18 @@ resource "aws_security_group" "app_sg" {
   }
 }
 
-#Ec2
-resource "aws_instance" "app_server" {
-  ami           = "ami-0c02fb55956c7d316"
-  instance_type = var.instance_type
-  key_name      = var.key_name
+# --------------------
+# EC2 INSTANCE
+# --------------------
+resource "aws_instance" "app" {
+  ami                    = "ami-0c02fb55956c7d316"
+  instance_type          = "t2.micro"
+  key_name               = var.key_name
+  vpc_security_group_ids = [aws_security_group.app_sg.id]
 
-  security_groups = [aws_security_group.app_sg.name]
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
 
-  user_data = <<-EOF
-              #!/bin/bash
-
-              yum update -y
-
-              amazon-linux-extras install docker -y
-
-              service docker start
-
-              usermod -a -G docker ec2-user
-
-              docker pull ${var.docker_image}
-
-              docker run -d -p 5000:5000 ${var.docker_image}
-
-              EOF
+  user_data = file("${path.module}/user-data.sh")
 
   tags = {
     Name = "student-task-manager"
