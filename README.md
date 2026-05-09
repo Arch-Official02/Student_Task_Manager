@@ -240,6 +240,7 @@ CloudWatch provides centralized logging and monitoring for operational visibilit
 
 * AWS credentials are properly configured before deployment
 * DockerHub credentials are stored securely in GitHub Secrets
+* An EC2 Key Pair already exists in AWS for SSH access
 * Required AWS permissions are available
 * Application traffic is relatively low for a single EC2 deployment
 
@@ -271,6 +272,36 @@ Possible production-grade improvements include:
 * Automated rollback strategy
 
 ---
+
+# Screenshots
+
+## GitHub Actions Pipeline
+
+![GitHub Actions](screenshots/github-actions-success.png)
+
+---
+
+## EC2 Instance Running
+
+![EC2](screenshots/ec2-running.png)
+
+---
+
+## Docker Container Running
+
+![Docker](screenshots/docker-container-running.png)
+
+---
+
+## CloudWatch Logs
+
+![CloudWatch](screenshots/cloudwatch-logs.png)
+
+---
+
+## Application Running
+
+![Application](screenshots/application-running.png)
 
 # Author
 
